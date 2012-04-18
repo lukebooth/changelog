@@ -13,6 +13,15 @@
         queues: <%= raw KanbanQueue.slugs %>
       });
       kanban.loadQueues();
+      $('#autoUpdate').click(function(){
+        $('#timerWrapper').fadeIn();
+        new Refresher({
+          time: 10000,
+          callback: function(){ kanban.loadQueues(); $('#lastUpdate span').empty().append(dateFormat('shortTime'))}
+        });
+        $('#lastUpdate span').append(dateFormat('shortTime'))
+        $(this).remove();
+      });
     });
   </script>
 <% end %>

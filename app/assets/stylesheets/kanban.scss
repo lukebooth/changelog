@@ -5,6 +5,41 @@
   cursor: pointer;
 }
 
+#timerWrapper {
+  display: none;
+  position: absolute;
+  top: 57px;
+  right: 50px;
+  z-index: 100;
+  width:140px;
+  
+  #timer {
+    float:left;
+    margin-left:3px;
+  }
+  
+  #lastUpdate {
+    width:85px;
+    float:left;
+    padding: 3px;
+    margin-top:3px;
+    line-height:1.1em;
+    
+    span {font-weight: bold;font-size:1.333em;}
+  }
+  
+}
+
+#autoUpdate {
+  position: absolute;
+  top: 60px;
+  right:100px;
+  z-index: 100;
+  color: #08C;
+  text-decoration: underline;
+  cursor:pointer;
+}
+
 #kanban {
   width: 100%;
   position: absolute;
