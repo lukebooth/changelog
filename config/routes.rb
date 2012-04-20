@@ -6,7 +6,12 @@ Changelog::Application.routes.draw do
   
   match "kanban" => "kanban#index", :via => :get
   match "kanban/:slug" => "kanban#show", :via => :get
-  match "kanban/:slug/:queue" => "kanban#queue", :via => :get, :constraints => {queue: Regexp.new(KanbanQueue.slugs.join("|"))}
+  
+  constraints :queue => Regexp.new(KanbanQueue.slugs.join("|")) do
+    match "kanban/:slug/:queue" => "kanban#queue", :via => :get
+    match "kanban/:slug/:queue/:ticket_number" => "kanban#assign_ticket_to_queue", :via => :put
+    match "kanban/:slug/:queue/:ticket_number" => "kanban#remove_ticket_from_queue", :via => :delete
+  end
   
   resources :projects do
     resources :environments, :controller => "project_environments" do
