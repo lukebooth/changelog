@@ -6,9 +6,15 @@ $.fn.extend
       -> $(@).removeClass('hover'))
   
   popoverForTicket: ->
+    is_staged_for_development = $(@).closest('ul').is '#staged_for_development'
     $(@).popover
-      title: -> $(@).find('.ticket-summary').html().split(': ')[0]
-      content: -> $(@).find('.ticket-summary').html().split(': ')[1].capitalize()
+      title: -> 
+        title = $(@).find('.ticket-summary').html().split(': ')
+        if title[1] then title[0] else '<span class="no-feature">No Feature</span>'
+      content: ->
+        content = $(@).find('.ticket-summary').html().split(': ')
+        content = if content[1] then content[1] else content
+        if is_staged_for_development then content + '<span class="remove-instructions">Shift + Click to remove</span>' else content.capitalize()
   
   initializeAutoUpdate: (interval, kanban)->
     $(@).click ->
