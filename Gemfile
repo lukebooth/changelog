@@ -34,6 +34,7 @@ gem 'devise',           '>= 2.0.0'
 gem 'devise_invitable', '~> 1.0.0'
 gem 'grit'
 gem 'letter_opener'
+gem 'bluecloth'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
