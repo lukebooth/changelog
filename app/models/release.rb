@@ -4,7 +4,7 @@ class Release < ActiveRecord::Base
   
   belongs_to :environment
   has_many :changes, :dependent => :destroy
-  has_many :commits, :dependent => :destroy
+  has_many :commits, :dependent => :destroy, :autosave => true
   
   default_scope order("created_at DESC")
   
@@ -27,7 +27,10 @@ class Release < ActiveRecord::Base
   
   
   def git_commits
-    can_read_commits? ? project.repo.commits_between(commit0, commit1) : []
+    return [] unless can_read_commits?
+    
+    Rails.logger.info "[git] getting commits: #{commit0}..#{commit1}"
+    project.repo.commits_between(commit0, commit1)
   end
   
   def build_changes_from_commits
@@ -42,7 +45,7 @@ class Release < ActiveRecord::Base
       if commit
         commit.update_attributes Commit.attributes_from_grit_commit(grit_commit)
       else
-        commits.create Commit.attributes_from_grit_commit(grit_commit)
+        commits.build Commit.attributes_from_grit_commit(grit_commit)
       end
     end
   end
